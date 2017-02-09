@@ -77,6 +77,11 @@
             <dd><%= h reply_to %></dd>
           <% end %>
 
+          <% unless return_path.empty? %>
+            <dt>Return-Path:</dt>
+            <dd><%= h return_path %></dd>
+          <% end %>
+
           <% if mail.subject %>
             <dt>Subject:</dt>
             <dd><strong><%= h mail.subject %></strong></dd>

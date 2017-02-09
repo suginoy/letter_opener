@@ -35,6 +35,26 @@ describe LetterOpener::Message do
 
   end
 
+  describe '#return_path' do
+    it 'handles no setting' do
+      mail    = mail()
+      message = described_class.new(mail, location: location)
+      expect(message.return_path).to eq('')
+    end
+
+    it 'handles nil' do
+      mail    = mail(:return_path => nil)
+      message = described_class.new(mail, location: location)
+      expect(message.return_path).to eq('')
+    end
+
+    it 'handles one email as a string' do
+      mail    = mail(:return_path => 'system@example.com')
+      message = described_class.new(mail, location: location)
+      expect(message.return_path).to eq('system@example.com')
+    end
+  end
+
   describe '#to' do
     it 'handles one email as a string' do
       mail   = mail(:to => 'test@example.com')
@@ -140,7 +160,6 @@ describe LetterOpener::Message do
       message = described_class.new(mail, location: location)
       expect(message.sender).to eq('test <test1@example.com>, test2 <test2@example.com>')
     end
-
   end
 
   describe '#<=>' do

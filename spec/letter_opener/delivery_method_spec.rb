@@ -62,14 +62,15 @@ describe LetterOpener::DeliveryMethod do
         expect(Launchy).to receive(:open)
 
         Mail.deliver do
-          from     'Foo <foo@example.com>'
-          sender   'Baz <baz@example.com>'
-          reply_to 'No Reply <no-reply@example.com>'
-          to       'Bar <bar@example.com>'
-          cc       'Qux <qux@example.com>'
-          bcc      'Qux <qux@example.com>'
-          subject  'Hello'
-          body     'World! http://example.com'
+          from        'Foo <foo@example.com>'
+          sender      'Baz <baz@example.com>'
+          reply_to    'No Reply <no-reply@example.com>'
+          return_path 'Return-Path <envelope-from@example.com>'
+          to          'Bar <bar@example.com>'
+          cc          'Qux <qux@example.com>'
+          bcc         'Qux <qux@example.com>'
+          subject     'Hello'
+          body        'World! http://example.com'
         end
       end
 
@@ -87,6 +88,10 @@ describe LetterOpener::DeliveryMethod do
 
       it 'saves Reply-to field' do
         expect(plain).to include("No Reply <no-reply@example.com>")
+      end
+
+      it 'saves Return-Path field' do
+        expect(plain).to include("Return-Path <envelope-from@example.com>")
       end
 
       it 'saves To field' do

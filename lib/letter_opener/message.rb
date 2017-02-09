@@ -100,6 +100,10 @@ module LetterOpener
       @reply_to ||= Array(@mail['reply-to']).join(", ")
     end
 
+    def return_path
+      @return_path ||= Array(@mail['return_path']).join(", ")
+    end
+
     def type
       content_type =~ /html/ ? "rich" : "plain"
     end
